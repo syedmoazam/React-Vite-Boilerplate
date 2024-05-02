@@ -2,6 +2,7 @@ import {ApiResponse, ApisauceConfig, create} from "apisauce";
 import {API_CONFIG, CONTENT_TYPE, HTTP_STATUS} from "@constants/api";
 import {getValue, isEmpty} from "@utils/utils";
 import STORAGE_KEY from "@constants/storage";
+import {getItem} from "@services/storageService";
 
 const apiSauceInstance = create({
   baseURL: API_CONFIG.BASE_URL,
@@ -81,7 +82,7 @@ const deleteReq = async (url: string, data: object, config?: ApisauceConfig) => 
 }
 
 apiSauceInstance.addRequestTransform((request) => {
-  const token = localStorage.getItem(STORAGE_KEY.TOKEN);
+  const token = getItem(STORAGE_KEY.TOKEN);
   if (!request.headers) request.headers = {};
   request.headers["Authorization"] = `${token}`;
 });
